@@ -1,0 +1,40 @@
+<div class="form-area">
+  <h1 class="header">Add Blog post</h1>
+  <form class="form">
+    <label>
+      <span class="head">Title</span>
+      <input type="text" name="title" id="title" placeholder="Title..." required>
+    </label>
+    <label>
+      <span class="head">Status</span>
+      <div class="custom-select-wrapper">
+        <div class="custom-select">
+          <div class="custom-select__trigger"><span>Private</span>
+            <div class="arrow"></div>
+          </div>
+          <ul name="status" class="custom-options">
+            <option class="custom-option selected" data-value="private" value="private">Private</option>
+            <option class="custom-option" data-value="public" value="public">Public</option>
+          </ul>
+        </div>
+      </div>
+
+    </label>
+    <label>
+      <span class="head">Body</span>
+      <textarea name="body" id="editor"></textarea>
+    </label>
+    <div class="form-btns">
+      <button class="form-btn" type="submit">Post</button>
+      <a href="/dashboard" class="form-cancel">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+<style>
+  .form-area {
+    width: 80%;
+    margin: 0 auto;
+  }
+</style>

@@ -1,0 +1,40 @@
+<div class="form-area">
+  <h1 class="header">Edit Blog post</h1>
+  <form action="/blog/{{blogPost._id}}" class="form" method="POST">
+    <input type="hidden" name="_method" value="PATCH">
+    <label>
+      <span class="head">Title</span>
+      <input type="text" name="title" id="title" value='{{blogPost.title}}' placeholder="Title..." required>
+    </label>
+    <label>
+      <span class="head">Status</span>
+      <div class="custom-select-wrapper">
+        <div class="custom-select">
+          <div class="custom-select__trigger"><span>{{uppercase blogPost.status}}</span>
+            <div class="arrow"></div>
+          </div>
+          <div class="custom-options">
+            <span class="custom-option {{select 'private' blogPost.status}}" data-value="private">Private</span>
+            <span class="custom-option {{select 'public' blogPost.status}}" data-value="public">Public</span>
+          </div>
+        </div>
+      </div>
+    </label>
+    <label>
+      <span class="head">Body</span>
+      <textarea name="body" id="editor" required>{{blogPost.body}}</textarea>
+    </label>
+    <div class="form-btns">
+      <button class="form-btn" type="submit">Post</button>
+      <a href="/dashboard" class="form-cancel">Cancel</a>
+    </div>
+
+  </form>
+</div>
+
+<style>
+  .form-area {
+    width: 80%;
+    margin: 0 auto;
+  }
+</style>

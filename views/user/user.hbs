@@ -1,0 +1,249 @@
+<div class="user-page">
+  <div class="profile-info">
+    <div class="display-info">
+      <span class="user-info"><a href="/users/@{{userProfile.username}}">{{userProfile.displayName}}</a></span>
+      <span class="about-user">{{userProfile.bio}}</span>
+      <div class="edit-link">{{{canEdit user userProfile}}}</div>
+    </div>
+    <div class="img">
+      <a href="/users/@{{userProfile.username}}">
+        <img src="{{userProfile.image}}" alt="User image">
+      </a>
+    </div>
+  </div>
+  {{#if blogPosts}}
+  <div class="posts">
+    <h1>Featured</h1>
+    <div class="post">
+      <div class="post-info">
+        <div class="img">
+          <a href="/users/{{mostLiked.user._id}}">
+            <img src="{{mostLiked.user.image}}" alt="User image">
+          </a>
+        </div>
+        <div class="info">
+          <span class="user-info"><a href="/users/{{mostLiked.user._id}}">{{mostLiked.user.displayName}}</a></span>
+          <div class="time-info">{{formatDate mostLiked.createdAt false}} · {{stats mostLiked.body true}}
+          </div>
+        </div>
+      </div>
+      <a href="/blog/{{mostLiked._id}}">
+        <div class="post-body">
+          <h1>{{mostLiked.title}}</h1>
+          <p>{{truncate (stripTags mostLiked.body) 140}}</p>
+        </div>
+      </a>
+      <button class="btn-like">
+        <i class="fa fa-thumbs{{isLiked user mostLiked._id}}-up" data-id="{{mostLiked._id}}"></i>
+        <span class="count" id="id{{mostLiked._id}}">{{mostLiked.likes}}</span>
+      </button>
+    </div>
+    <h1>Latest</h1>
+    {{#each blogPosts}}
+    <div class="post">
+      <div class="post-info">
+        <div class="img">
+          <a href="/users/@{{user.username}}">
+            <img src="{{user.image}}" alt="User image">
+          </a>
+        </div>
+        <div class="info">
+          <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
+          <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+          </div>
+        </div>
+      </div>
+      <a href="/blog/{{_id}}">
+        <div class="post-body">
+          <h1>{{title}}</h1>
+          <p>{{truncate (stripTags body) 140}}</p>
+        </div>
+      </a>
+      <button class="btn-like">
+        <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
+        <span class="count" id="id{{_id}}">{{likes}}</span>
+      </button>
+    </div>
+    {{else}}
+    <h1>No posts to see yet!</h1>
+    {{/each}}
+  </div>
+  {{else}}
+  <h1 class="error">No posts to see yet!</h1>
+  {{/if}}
+</div>
+
+<style>
+  .user-page {
+    display: flex;
+    width: 63%;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profile-info {
+    width: 100%;
+    color: rgb(133, 133, 133);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .profile-info .img img {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+  }
+
+  .display-info .user-info a {
+    color: rgb(219, 219, 219);
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 1.8rem;
+    display: block;
+  }
+
+  .display-info {
+    font-size: 1.7rem;
+    margin-right: 50px;
+  }
+
+  .about-user {
+    font-size: 1.2rem;
+    display: block;
+  }
+
+  .count {
+    cursor: text;
+  }
+
+  .btn-like {
+    background: inherit;
+    border: none;
+    cursor: pointer;
+    margin: 16px 0 0;
+    outline: none;
+    transition: 200ms ease-in;
+    color: #2d88ff;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-like i {
+    margin-right: 11px;
+    font-size: 1.23rem;
+    transition: 200ms ease-in-out;
+  }
+
+  .btn-like i:hover {
+    color: #2d88ff8c;
+  }
+
+  .posts {
+    display: flex;
+    width: 100%;
+    margin: 30px auto;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .post {
+    width: 100%;
+    border-radius: 6px;
+    padding: 25px 24px 20px;
+    background: #232323;
+    margin-bottom: 20px;
+    box-shadow: #161616b7 0px 2px 5px;
+    border: 1px solid #161616b7;
+  }
+
+  .posts h1 {
+    color: #f8f8f8;
+    font-family: 'Karla', sans-serif;
+    font-size: 1.47rem;
+    font-weight: 500;
+    margin: 0 0 13px 0;
+  }
+
+  .post-info {
+    color: rgb(133, 133, 133);
+    display: flex;
+    align-items: center;
+  }
+
+  .img img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+
+  .user-info a {
+    color: rgb(219, 219, 219);
+    font-weight: 500;
+  }
+
+  .info {
+    margin-left: 13px;
+    font-size: 15px;
+  }
+
+  .post-body {
+    margin-top: 16px;
+    color: #e2e2e2;
+  }
+
+  .post-body h1 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 10px 0;
+  }
+
+  .post-body p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.5;
+    margin: 8px 0 5px 0;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #b9b9b9;
+  }
+
+  .error {
+    color: #b9b8b8;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 40px auto 0 0;
+  }
+
+  .edit-link a {
+    color: #2d88ff;
+    font-weight: 550;
+    letter-spacing: 0.8px;
+    display: block;
+    margin-top: 9px;
+    font-size: 1.27rem;
+    transition: 200ms ease-in-out;
+  }
+
+  .edit-link a:hover {
+    color: #2d88ffc7;
+  }
+</style>
+
+<script>
+  for (const btn of document.querySelectorAll('.btn-like i')) {
+    btn.addEventListener('click', async function () {
+      this.classList.remove('fa-thumbs-o-up');
+      this.classList.add('fa-thumbs-up');
+      document.querySelector(`#id${this.dataset.id}`).textContent =
+        parseInt(document.querySelector(`#id${this.dataset.id}`).textContent) + 1;
+      await fetch(`/blog/like/${this.dataset.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+    });
+  }
+</script>

@@ -1,0 +1,51 @@
+<div class="form-area">
+  <h1 class="header">Account Settings</h1>
+  <form action="/users/settings" class="form" method="POST">
+    <input type="hidden" name="_method" value="PATCH">
+    {{#each errors}}
+    <div class="form-error">
+      <p>{{msg}}</p>
+    </div>
+    {{/each}}
+    <label>
+      <span class="head">Name</span>
+      <input type="text" name="displayName" id="name" value='{{user.displayName}}' placeholder="Name...">
+    </label>
+    <span class="head">Bio</span>
+    <input type="text" name="bio" id="bio" value='{{user.bio}}' placeholder="Bio..." required>
+    </label>
+    <div class="form-btns">
+      <button class="form-btn" type="submit">Update</button>
+      <a href="/users/@{{user.username}}" class="form-cancel">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<style>
+  .form {
+    padding-top: 10px;
+  }
+
+  .form-area {
+    width: 55%;
+    margin: 0 auto;
+  }
+
+  .form-error {
+    background: #383838;
+    padding: 13px 16px;
+    margin: 11px 0px 0px;
+    border-radius: 5px;
+  }
+
+  .form-error:first-of-type {
+    margin-top: 8px;
+  }
+
+  .form-error p {
+    font-size: 1.1rem;
+    font-family: 'Karla', sans-serif;
+    color: #f8f8f8;
+    font-weight: 400;
+  }
+</style>
