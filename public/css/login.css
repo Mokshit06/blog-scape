@@ -103,3 +103,43 @@ a {
 .footer a {
   color: #2d88ff;
 }
+
+@media screen and (max-width: 1000px) {
+  .footer {
+    padding: 0 100px 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .form {
+    width: 86%;
+    padding: 10px 20px 30px;
+  }
+
+  .form h1 {
+    font-size: 1.94rem;
+  }
+
+  .form h2 {
+    font-size: 1.5rem;
+    margin: 4px 0 7px;
+  }
+
+  .form p {
+    font-size: 1.05rem;
+  }
+
+  .signin {
+    width: 215px;
+    font-size: 0.9rem;
+  }
+
+  .footer {
+    flex-direction: column;
+    padding: 14px 0;
+  }
+
+  .footer p {
+    font-size: 1rem;
+  }
+}

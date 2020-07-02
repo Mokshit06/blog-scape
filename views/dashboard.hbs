@@ -18,6 +18,12 @@
     font-size: 1.2rem;
     font-weight: 400;
   }
+
+  @media screen and (max-width: 768px) {
+    .error {
+      font-size: 1.07rem;
+    }
+  }
 </style>
 
 <body>
@@ -30,14 +36,17 @@
 
     <div class="tabs">
       <ul class="tab-list">
-        <li class="tab-btn" data-tab="#private" id="default">Private &nbsp;{{getCount private.length}}</li>
-        <li class="tab-btn" data-tab="#public">Public &nbsp;{{getCount public.length}}</li>
+        <li class="tab-btn" data-tab="#private" id="default">Private &nbsp;<span
+            class="blog-count-private">{{getCount private.length}}</span></li>
+        <li class="tab-btn" data-tab="#public">Public &nbsp;<span
+            class="blog-count-public">{{getCount public.length}}</span>
+        </li>
       </ul>
     </div>
 
     <div class="tab-content" id="private">
       {{#each private}}
-      <div class="story" id="id{{_id}}">
+      <div class="story private-post" id="id{{_id}}">
         <div class="story-head">
           <h3 class="post-header"><a href="/blog/{{_id}}">{{title}}</a></h3>
           <h3 class="body">{{truncate (stripTags body) 125}}</h3>
@@ -67,7 +76,7 @@
 
     <div class="tab-content" id="public">
       {{#each public}}
-      <div class="story" id="id{{_id}}">
+      <div class="story public-post" id="id{{_id}}">
         <div class="story-head">
           <h3 class="post-header"><a href="/blog/{{_id}}">{{title}}</a></h3>
           <h3 class="body">{{truncate (stripTags body) 125}}</h3>
@@ -97,23 +106,8 @@
   </section>
   {{> _footer}}
 
-  <script src="/js/tab.js"></script>
-  <script>
-    const deleteBtns = document.querySelectorAll('#delete-btn');
-
-    for (const btn of deleteBtns) {
-      btn.addEventListener('click', async function (e) {
-        console.log('a')
-        document.querySelector(`#id${this.dataset.id}`).remove();
-        await fetch(`/blog/${this.dataset.id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-      });
-    }
-  </script>
+  <script src="/js/navbar.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 
 </html>

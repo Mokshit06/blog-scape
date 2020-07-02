@@ -20,22 +20,27 @@
   {{> _header}}
   <section class="content">
     <div class="post">
-      <h1 class="header">{{blogPost.title}}</h1>
+      {{#with blogPost}}
+      <h1 class="header">{{title}}</h1>
       <div class="post-info">
         <div class="img">
-          <a href="/users/@{{blogPost.user.username}}">
-            <img src="{{blogPost.user.image}}" alt="User image">
+          <a href="/users/@{{user.username}}">
+            <img src="{{user.image}}" alt="User image">
           </a>
         </div>
         <div class="info">
-          <span class="user-info"><a href="/users/@{{blogPost.user.username}}">{{blogPost.user.displayName}}</a></span>
-          <div class="time-info">{{formatDate blogPost.createdAt false}} · {{stats blogPost.body true}}
+          <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
+          <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
           </div>
         </div>
       </div>
-      <div class="post-body">{{{blogPost.body}}}</div>
+      <div class="post-body">{{{body}}}</div>
+      {{/with}}
     </div>
   </section>
+  {{> _footer}}
+
+  <script src="/js/navbar.js"></script>
 </body>
 
 </html>

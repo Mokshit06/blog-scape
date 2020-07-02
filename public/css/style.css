@@ -430,6 +430,10 @@ a {
   box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 10px;
 }
 
+.right {
+  transform: translateX(-12%);
+}
+
 .has-dropdown:focus-within .dropdown {
   opacity: 1;
   pointer-events: auto;
@@ -458,10 +462,11 @@ a {
 
 .story {
   display: flex;
+  padding: 20px 0;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  min-height: 17vh;
+  min-height: fit-content;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -480,8 +485,7 @@ a {
 }
 
 .story-head .body {
-  margin-top: 7px;
-  max-height: 48px;
+  margin-top: 9px;
   font-size: 18px;
   font-weight: 400;
   color: #838383;
@@ -500,7 +504,7 @@ hr {
 }
 
 .stats .info {
-  margin-top: 8px;
+  margin-top: 10px;
   margin-right: 14px;
 }
 
@@ -514,4 +518,198 @@ hr {
   color: currentColor;
   border: none;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1000px) {
+  .footer {
+    padding: 0 100px 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    width: 88%;
+    margin: 70px auto 80px;
+  }
+
+  #navbar {
+    min-width: 8vh;
+  }
+
+  .line-1,
+  .line-2,
+  .line-3 {
+    width: 30px;
+    height: 3px;
+    background: #f8f8f8;
+    margin: 5px;
+    -webkit-transition: 400ms;
+    transition: 400ms;
+    border-radius: 10px;
+  }
+
+  .hamburger {
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    right: 5%;
+    top: 50%;
+    -webkit-transform: translate(-5%, -50%);
+    transform: translate(-5%, -50%);
+    z-index: 20;
+  }
+
+  .logo {
+    top: 50%;
+    left: 5%;
+    position: absolute;
+    -webkit-transform: translate(-5%, -50%);
+    transform: translate(-5%, -50%);
+  }
+
+  .nav-links {
+    position: fixed;
+    background: #232323;
+    height: 100vh;
+    width: 100%;
+    margin-top: 46.5vh;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    clip-path: circle(100px at 90% -10%);
+    -webkit-clip-path: circle(100px at 90% -10%);
+    -webkit-transition: all 1s ease-out;
+    transition: all 1s ease-out;
+    pointer-events: none;
+    padding: 100px 0;
+  }
+
+  .nav-links.open {
+    clip-path: circle(1000px at 90% -10%);
+    -webkit-clip-path: circle(1000px at 90% -10%);
+    pointer-events: all;
+  }
+
+  .nav-links li {
+    font-size: 25px;
+    font-weight: 600;
+    opacity: 0;
+  }
+
+  .nav-links li a {
+    font-size: 25px;
+    font-weight: 600;
+  }
+
+  .nav-links li:nth-of-type(1) {
+    -webkit-transition: all 0.5s ease 0.2s;
+    transition: all 0.5s ease 0.2s;
+  }
+
+  .nav-links li:nth-of-type(2) {
+    -webkit-transition: all 0.5s ease 0.4s;
+    transition: all 0.5s ease 0.4s;
+  }
+
+  .nav-links li:nth-of-type(3) {
+    -webkit-transition: all 0.5s ease 0.6s;
+    transition: all 0.5s ease 0.6s;
+  }
+
+  .nav-links li:nth-of-type(4) {
+    -webkit-transition: all 0.5s ease 0.8s;
+    transition: all 0.5s ease 0.8s;
+  }
+
+  .nav-links li.fade {
+    opacity: 1;
+  }
+
+  .toggle .line-1 {
+    -webkit-transform: rotate(-45deg) translate(-5px, 6px);
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .toggle .line-2 {
+    opacity: 0;
+  }
+
+  .toggle .line-3 {
+    -webkit-transform: rotate(45deg) translate(-5px, -6px);
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+
+  .head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .head h1 {
+    margin-bottom: 10px;
+    font-size: 1.94rem;
+  }
+
+  .head a {
+    font-size: 0.89rem;
+  }
+
+  .error {
+    font-size: 1.2rem;
+  }
+
+  .dropdown {
+    transform: translateX(-78%);
+  }
+
+  .form-area {
+    width: 100%;
+  }
+
+  .form input {
+    line-height: 1.3;
+  }
+
+  .header {
+    font-size: 1.94rem;
+  }
+
+  .form-btn {
+    margin-right: 8px;
+    padding: 11px 21px;
+  }
+
+  .form-cancel {
+    padding: 11px 18px;
+  }
+
+  .custom-select__trigger {
+    height: 42px;
+  }
+
+  .form {
+    padding: 11px 17px 15px 17px;
+  }
+
+  .footer {
+    flex-direction: column;
+    padding: 14px 0;
+  }
+
+  .footer p {
+    font-size: 1rem;
+  }
+
+  .story-head .body {
+    font-size: 1.02rem;
+    line-height: 1.5;
+  }
+
+  .stats .info {
+    font-size: 0.94rem;
+  }
+
+  .story-head .post-header a {
+    font-size: 1.6rem;
+  }
 }

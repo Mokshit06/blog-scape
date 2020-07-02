@@ -52,45 +52,49 @@
     </div>
   </section>
   {{> _footer}}
+
+  <script src="/js/navbar.js"></script>
+  <script src="/js/dropdown.js"></script>
+  <script>
+    tinymce.init({
+      selector: '#editor',
+      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed powerpaste table advtable tinymcespellchecker',
+      toolbar: 'casechange checklist code pageembed table align',
+      toolbar_mode: 'floating',
+      branding: false,
+      fontsize_formats: '11px 12px 14px 16px 18px 24px',
+      height: 270,
+      icons: 'material',
+      mobile: {
+        height: 190
+      }
+    });
+    const form = document.querySelector('.post-form');
+    async function postBlog(e) {
+      e.preventDefault();
+      const body = {
+        title: document.querySelector('#title').value,
+        body: tinymce.activeEditor.getContent(),
+        status: document.querySelector('.selected').value,
+      };
+      try {
+        await fetch(`/blog/{{blogPost._id}}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        });
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    form.addEventListener('submit', e => {
+      postBlog(e);
+      location.href = '/dashboard';
+    });
+  </script>
 </body>
 
 </html>
-
-<script src="/js/dropdown.js"></script>
-<script>
-  tinymce.init({
-    selector: '#editor',
-    plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed powerpaste table advtable tinymcespellchecker',
-    toolbar: 'casechange checklist code pageembed table align',
-    toolbar_mode: 'floating',
-    branding: false,
-    fontsize_formats: '11px 12px 14px 16px 18px 24px',
-    height: 270,
-    icons: 'material'
-  });
-  const form = document.querySelector('.post-form');
-  async function postBlog(e) {
-    e.preventDefault();
-    const body = {
-      title: document.querySelector('#title').value,
-      body: tinymce.activeEditor.getContent(),
-      status: document.querySelector('.selected').value,
-    };
-    try {
-      await fetch(`/blog/{{blogPost._id}}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  form.addEventListener('submit', e => {
-    postBlog(e);
-    location.href = '/dashboard';
-  });
-</script>

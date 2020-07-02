@@ -54,6 +54,8 @@
     </div>
   </section>
   {{> _footer}}
+
+  <script src="/js/navbar.js"></script>
   <script src="/js/dropdown.js"></script>
   <script>
     tinymce.init({
@@ -64,7 +66,10 @@
       branding: false,
       fontsize_formats: '11px 12px 14px 16px 18px 24px',
       height: 270,
-      icons: 'material'
+      icons: 'material',
+      mobile: {
+        height: 190
+      }
     });
     const form = document.querySelector('.edit-form');
     async function updateBlog(e) {

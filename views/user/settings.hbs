@@ -41,6 +41,12 @@
     color: #f8f8f8;
     font-weight: 400;
   }
+
+  @media screen and (max-width: 768px) {
+    .form-area {
+      width: 100%;
+    }
+  }
 </style>
 
 <body>
@@ -68,7 +74,9 @@
       </form>
     </div>
   </section>
+  {{> _footer}}
 
+  <script src="/js/navbar.js"></script>
   <script>
     const form = document.querySelector('.form');
     async function updateUser(e) {

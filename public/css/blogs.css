@@ -16,6 +16,7 @@
   padding: 25px 24px 20px;
   background: #232323;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  border: 1px solid #161616b7;
 }
 
 .post-info {
@@ -59,4 +60,36 @@
   font-size: 1.1rem;
   font-weight: 400;
   color: #b9b9b9;
+}
+
+@media screen and (max-width: 768px) {
+  .posts {
+    grid-template-columns: 1fr;
+  }
+
+  .post {
+    padding: 20px 20px 15px;
+  }
+
+  .post-body h1 {
+    font-size: 1.35rem;
+    margin: 7px 0;
+  }
+
+  .post-body p {
+    font-size: 1.03rem;
+  }
+
+  .btn-like {
+    margin: 15px 0 0;
+  }
+
+  .time-info {
+    font-size: 0.85rem;
+  }
+
+  .img img {
+    height: 42px;
+    width: 42px;
+  }
 }
