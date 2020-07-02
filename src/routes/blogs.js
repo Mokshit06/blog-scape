@@ -14,7 +14,6 @@ router.post('/', ensureAuth, async (req, res) => {
   try {
     req.body.user = req.user.id;
     await BlogPost.create(req.body);
-    res.redirect('/dashboard');
   } catch (error) {
     console.error(error);
     res.render('error/500');
@@ -128,8 +127,6 @@ router.patch('/:id', ensureAuth, async (req, res) => {
       new: false,
       runValidators: true,
     });
-
-    res.redirect('/dashboard');
   } catch (error) {
     console.error(error);
     res.render('error/500');
@@ -142,6 +139,9 @@ router.patch('/:id', ensureAuth, async (req, res) => {
  */
 router.patch('/like/:id', ensureAuth, async (req, res) => {
   const id = req.params.id;
+  if (!ObjectId.isValid(id)) {
+    return res.render('error/404');
+  }
   try {
     let blogPost = await BlogPost.findById(id).populate('user').lean();
 
@@ -175,8 +175,6 @@ router.delete('/:id', ensureAuth, async (req, res) => {
     if (blogPost.user != req.user.id) {
       return res.redirect('/');
     }
-
-    res.redirect('/dashboard');
   } catch (error) {
     console.error(error);
     res.render('error/500');

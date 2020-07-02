@@ -8,9 +8,7 @@ const BlogPost = require('../models/BlogPost');
  * @route GET /
  */
 router.get('/', ensureGuest, (req, res) => {
-  res.render('login', {
-    layout: 'login',
-  });
+  res.render('login');
 });
 
 /**
@@ -19,7 +17,9 @@ router.get('/', ensureGuest, (req, res) => {
  */
 router.get('/dashboard', ensureAuth, async (req, res) => {
   try {
-    const blogPosts = await BlogPost.find({ user: req.user.id }).lean();
+    const blogPosts = await BlogPost.find({ user: req.user.id })
+      .sort({ createdAt: 'desc' })
+      .lean();
     res.render('dashboard', {
       private: blogPosts.filter(post => post.status === 'private'),
       public: blogPosts.filter(post => post.status === 'public'),

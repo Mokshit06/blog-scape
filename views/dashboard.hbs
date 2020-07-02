@@ -1,275 +1,119 @@
-<div class="head">
-  <h1>Your Blog Posts</h1>
-  <a href="/blog/add" class="btn">Write a blog</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="tabs">
-  <ul class="tab-list">
-    <li class="tab-btn" data-tab="#private" id="default">Private &nbsp;{{getCount private.length}}</li>
-    <li class="tab-btn" data-tab="#public">Public &nbsp;{{getCount public.length}}</li>
-  </ul>
-</div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
 
-<div class="tab-content" id="private">
-  {{#each private}}
-  <div class="story">
-    <div class="story-head">
-      <h3 class="post-header"><a href="/blog/{{_id}}">{{title}}</a></h3>
-      <h3 class="body">{{stripTags (truncate body 136)}}</h3>
-    </div>
-    <div class="stats">
-      <div class="info">Created {{formatDate createdAt true}} · {{stats body}}</div>
-      <span class="more-info">
-        <button class="has-dropdown">
-          <i class="fa fa-angle-down"></i>
-          <ul class="dropdown">
-            <li class="dropdown-item">
-              <a href="/blog/edit/{{_id}}">Edit post</a>
-            </li>
-            <li class="dropdown-item">
-              <form action="/blog/{{_id}}" method="POST" id="delete-form">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="submit" value="Delete post">
-              </form>
-            </li>
-          </ul>
-        </button>
-      </span>
-    </div>
-  </div>
-  </a>
-  <hr>
-  {{else}}
-  <h1 class="error">You haven't created any private blog posts yet.</h1>
-  {{/each}}
-</div>
-
-<div class="tab-content" id="public">
-  {{#each public}}
-  <div class="story">
-    <div class="story-head">
-      <h3 class="post-header"><a href="/blog/{{_id}}">{{title}}</a></h3>
-      <h3 class="body">{{stripTags (truncate body 140)}}</h3>
-    </div>
-    <div class="stats">
-      <div class="info">Created {{formatDate createdAt true}} · {{stats body}}</div>
-      <span class="more-info">
-        <button class="has-dropdown">
-          <i class="fa fa-angle-down"></i>
-          <ul class="dropdown">
-            <li class="dropdown-item">
-              <a href="/blog/edit/{{_id}}">Edit post</a>
-            </li>
-            <li class="dropdown-item">
-              <form action="/blog/{{_id}}" method="POST" id="delete-form">
-                <input type="hidden" name="_method" value="DELETE">
-                <input type="submit" value="Delete post">
-              </form>
-            </li>
-          </ul>
-        </button>
-      </span>
-    </div>
-  </div>
-  <hr>
-  {{else}}
-  <h1 class="error">You haven't created any public blog posts yet.</h1>
-  {{/each}}
-</div>
-
+  <title>Dashboard - Blogger</title>
+</head>
 <style>
   .error {
     margin: 30px 0 0;
-    color: #b9b8b8;
     font-size: 1.2rem;
     font-weight: 400;
   }
-
-  .head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
-  }
-
-  .head h1 {
-    font-size: 2.2rem;
-    color: #f8f8f8;
-  }
-
-  .head a {
-    display: inline-block;
-    text-decoration: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    border: 2px solid #2d88ff;
-    color: #2d88ff;
-    font-size: 1rem;
-    transition: 200ms ease-in-out;
-  }
-
-  .head a:hover {
-    color: #f8f8f8;
-    background: linear-gradient(134deg, #15a2fa 0%, #036ce4 99%);
-  }
-
-  .tabs {
-    margin-top: 5vh;
-    border-bottom: 2px solid rgb(65, 65, 65);
-  }
-
-  .tab-list {
-    list-style: none;
-    margin-bottom: -2px;
-    overflow-x: hidden;
-    white-space: nowrap;
-  }
-
-  .tab-btn {
-    border-bottom: medium none;
-    padding-bottom: 4px;
-    margin-right: 20px;
-    line-height: 40px;
-    color: rgb(65, 65, 65);
-    outline: none;
-    display: inline-block;
-    cursor: pointer;
-  }
-
-
-  .tab-btn.active {
-    border-bottom: 2px solid #2d88ff;
-    color: #f8f8f8;
-  }
-
-  .tab-content {
-    display: none;
-  }
-
-  .has-dropdown {
-    outline: none;
-  }
-
-  .dropdown {
-    position: absolute;
-    width: 110px;
-    opacity: 0;
-    z-index: 2;
-    background: #232323;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 4px;
-    height: 5rem;
-    pointer-events: none;
-    transition: opacity .15s ease-in-out;
-    transform: translateX(-42%);
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 10px;
-  }
-
-  .has-dropdown:focus-within .dropdown {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .dropdown li {
-    list-style: none;
-    font-size: 0.9rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  .dropdown li a,
-  .dropdown li input {
-    background: inherit;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    color: #f8f8f8;
-    font-weight: 400;
-  }
-
-  .dropdown li a:hover,
-  .dropdown li input:hover {
-    color: #a1a1a1;
-  }
-
-  .story {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    min-height: 17vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-
-  .story-head {
-    word-wrap: break-word;
-  }
-
-  .story-head .post-header a {
-    color: #f8f8f8;
-    font-size: 23px;
-    text-decoration: none;
-    line-height: 28px;
-    font-weight: 600;
-    letter-spacing: .5px;
-    max-height: 56px;
-  }
-
-  .story-head .body {
-    margin-top: 7px;
-    max-height: 48px;
-    font-size: 18px;
-    font-weight: 400;
-    color: #838383;
-  }
-
-  hr {
-    border: none;
-    background: rgb(65, 65, 65);
-    height: 1px;
-  }
-
-  .stats {
-    display: flex;
-    color: rgb(90, 90, 90);
-    font-weight: 400;
-  }
-
-  .stats .info {
-    margin-top: 8px;
-    margin-right: 14px;
-  }
-
-  .stats .more-info {
-    padding: 6px 2px 0;
-  }
-
-  .more-info .has-dropdown {
-    font-size: 1.7rem;
-    background: inherit;
-    color: currentColor;
-    border: none;
-    cursor: pointer;
-  }
 </style>
 
-<script>
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', function (e) {
-      const tabContent = document.querySelectorAll('.tab-content');
-      tabContent.forEach(tab => (tab.style.display = 'none'));
-      tabBtns.forEach(tabBtn => tabBtn.classList.remove('active'));
+<body>
+  {{> _header}}
+  <section class="content">
+    <div class="head">
+      <h1>Your Blog Posts</h1>
+      <a href="/blog/add" class="btn">Write a blog</a>
+    </div>
 
-      const currentTab = document.querySelector(btn.dataset.tab);
-      currentTab.style.display = 'block';
-      btn.classList.add('active');
-    });
-  });
+    <div class="tabs">
+      <ul class="tab-list">
+        <li class="tab-btn" data-tab="#private" id="default">Private &nbsp;{{getCount private.length}}</li>
+        <li class="tab-btn" data-tab="#public">Public &nbsp;{{getCount public.length}}</li>
+      </ul>
+    </div>
 
-  window.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('#default').click();
-  });
-</script>
+    <div class="tab-content" id="private">
+      {{#each private}}
+      <div class="story" id="id{{_id}}">
+        <div class="story-head">
+          <h3 class="post-header"><a href="/blog/{{_id}}">{{title}}</a></h3>
+          <h3 class="body">{{truncate (stripTags body) 125}}</h3>
+        </div>
+        <div class="stats">
+          <div class="info">Created {{formatDate createdAt true}} · {{stats body}}</div>
+          <span class="more-info">
+            <button class="has-dropdown">
+              <i class="fa fa-angle-down"></i>
+              <ul class="dropdown">
+                <li class="dropdown-item">
+                  <a href="/blog/edit/{{_id}}">Edit post</a>
+                </li>
+                <li class="dropdown-item">
+                  <a id="delete-btn" data-id="{{_id}}">Delete post</a>
+                </li>
+              </ul>
+            </button>
+          </span>
+        </div>
+      </div>
+      <hr>
+      {{else}}
+      <h1 class="error">You haven't created any private blog posts yet.</h1>
+      {{/each}}
+    </div>
+
+    <div class="tab-content" id="public">
+      {{#each public}}
+      <div class="story" id="id{{_id}}">
+        <div class="story-head">
+          <h3 class="post-header"><a href="/blog/{{_id}}">{{title}}</a></h3>
+          <h3 class="body">{{truncate (stripTags body) 125}}</h3>
+        </div>
+        <div class="stats">
+          <div class="info">Created {{formatDate createdAt true}} · {{stats body}}</div>
+          <span class="more-info">
+            <button class="has-dropdown">
+              <i class="fa fa-angle-down"></i>
+              <ul class="dropdown">
+                <li class="dropdown-item">
+                  <a href="/blog/edit/{{_id}}">Edit post</a>
+                </li>
+                <li class="dropdown-item">
+                  <a id="delete-btn" data-id="{{_id}}">Delete post</a>
+                </li>
+              </ul>
+            </button>
+          </span>
+        </div>
+      </div>
+      <hr>
+      {{else}}
+      <h1 class="error">You haven't created any public blog posts yet.</h1>
+      {{/each}}
+    </div>
+  </section>
+  {{> _footer}}
+
+  <script src="/js/tab.js"></script>
+  <script>
+    const deleteBtns = document.querySelectorAll('#delete-btn');
+
+    for (const btn of deleteBtns) {
+      btn.addEventListener('click', async function (e) {
+        console.log('a')
+        document.querySelector(`#id${this.dataset.id}`).remove();
+        await fetch(`/blog/${this.dataset.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

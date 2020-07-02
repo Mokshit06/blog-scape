@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const BlogPost = require('./BlogPost');
 
 const userSchema = new mongoose.Schema({
   googleId: {
@@ -35,6 +36,14 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+userSchema.pre('remove', async function (next) {
+  console.log(this._id);
+  console.log(await BlogPost.find({ user: this._id }));
+  const blogPosts = await BlogPost.deleteMany({ user: this._id });
+  console.log(blogPosts);
+  next();
 });
 
 const User = mongoose.model('User', userSchema);

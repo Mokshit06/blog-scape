@@ -29,7 +29,7 @@ router.get('/@:username', ensureAuth, async (req, res) => {
 
     const mostLiked = blogPosts.sort((a, b) => b.likes - a.likes)[0];
 
-    res.render('user/user', {
+    res.render('user/profile', {
       userProfile: user,
       mostLiked,
       blogPosts,
@@ -67,7 +67,6 @@ router.patch('/settings', ensureAuth, async (req, res) => {
         new: false,
         runValidators: true,
       });
-      res.redirect(`/users/@${user.username}`);
     }
   } catch (error) {
     console.error(error);
@@ -85,6 +84,19 @@ router.get('/settings', ensureAuth, (req, res) => {
     return res.render('error/404');
   }
   res.render('user/settings');
+});
+
+/**
+ * @desc  Delete user
+ * @route DELETE /users/
+ */
+router.delete('/', ensureAuth, async (req, res) => {
+  try {
+    await req.user.remove();
+  } catch (error) {
+    res.render('error/500');
+    console.error(error);
+  }
 });
 
 module.exports = router;

@@ -1,40 +1,96 @@
-<div class="form-area">
-  <h1 class="header">Add Blog post</h1>
-  <form class="form">
-    <label>
-      <span class="head">Title</span>
-      <input type="text" name="title" id="title" placeholder="Title..." required>
-    </label>
-    <label>
-      <span class="head">Status</span>
-      <div class="custom-select-wrapper">
-        <div class="custom-select">
-          <div class="custom-select__trigger"><span>Private</span>
-            <div class="arrow"></div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tiny.cloud/1/fl17ta0vnwiu1e83c59awiz4luuj31l6t9dq8autrc5wifec/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  <title>Add Post - BlogScape</title>
+</head>
+
+<body>
+  {{> _header}}
+  <section class="content">
+    <div class="form-area">
+      <h1 class="header">Add Blog post</h1>
+      <form class="form post-form">
+        <label>
+          <span class="head">Title</span>
+          <input type="text" name="title" id="title" placeholder="Title..." required>
+        </label>
+        <label>
+          <span class="head">Status</span>
+          <div class="custom-select-wrapper">
+            <div class="custom-select">
+              <div class="custom-select__trigger"><span>Private</span>
+                <div class="arrow"></div>
+              </div>
+              <ul name="status" class="custom-options">
+                <option class="custom-option selected" data-value="private" value="private">Private</option>
+                <option class="custom-option" data-value="public" value="public">Public</option>
+              </ul>
+            </div>
           </div>
-          <ul name="status" class="custom-options">
-            <option class="custom-option selected" data-value="private" value="private">Private</option>
-            <option class="custom-option" data-value="public" value="public">Public</option>
-          </ul>
+
+        </label>
+        <label>
+          <span class="head">Body</span>
+          <textarea name="body" id="editor"></textarea>
+        </label>
+        <div class="form-btns">
+          <button class="form-btn" type="submit">Post</button>
+          <a href="/dashboard" class="form-cancel">Cancel</a>
         </div>
-      </div>
 
-    </label>
-    <label>
-      <span class="head">Body</span>
-      <textarea name="body" id="editor"></textarea>
-    </label>
-    <div class="form-btns">
-      <button class="form-btn" type="submit">Post</button>
-      <a href="/dashboard" class="form-cancel">Cancel</a>
+      </form>
     </div>
+  </section>
+  {{> _footer}}
+</body>
 
-  </form>
-</div>
+</html>
 
-<style>
-  .form-area {
-    width: 80%;
-    margin: 0 auto;
+<script src="/js/dropdown.js"></script>
+<script>
+  tinymce.init({
+    selector: '#editor',
+    plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed powerpaste table advtable tinymcespellchecker',
+    toolbar: 'casechange checklist code pageembed table align',
+    toolbar_mode: 'floating',
+    branding: false,
+    fontsize_formats: '11px 12px 14px 16px 18px 24px',
+    height: 270,
+    icons: 'material'
+  });
+  const form = document.querySelector('.post-form');
+  async function postBlog(e) {
+    e.preventDefault();
+    const body = {
+      title: document.querySelector('#title').value,
+      body: tinymce.activeEditor.getContent(),
+      status: document.querySelector('.selected').value,
+    };
+    try {
+      await fetch(`/blog/{{blogPost._id}}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+    } catch (error) {
+      console.error(error)
+    }
   }
-</style>
+
+  form.addEventListener('submit', e => {
+    postBlog(e);
+    location.href = '/dashboard';
+  });
+</script>

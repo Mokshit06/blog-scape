@@ -1,0 +1,144 @@
+.user-page {
+  display: flex;
+  width: 63%;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-info {
+  width: 100%;
+  color: rgb(133, 133, 133);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-info .img img {
+  width: 95px;
+  height: 95px;
+  border-radius: 50%;
+}
+
+.display-info .user-info a {
+  color: rgb(219, 219, 219);
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 1.8rem;
+  display: block;
+}
+
+.display-info {
+  font-size: 1.7rem;
+  margin-right: 50px;
+}
+
+.about-user {
+  font-size: 1.2rem;
+  display: block;
+}
+
+.posts {
+  display: flex;
+  width: 100%;
+  margin: 30px auto;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.post {
+  width: 100%;
+  border-radius: 6px;
+  padding: 25px 24px 20px;
+  background: #232323;
+  margin-bottom: 20px;
+  box-shadow: #161616b7 0px 2px 5px;
+  border: 1px solid #161616b7;
+}
+
+.posts h1 {
+  color: #f8f8f8;
+  font-family: 'Karla', sans-serif;
+  font-size: 1.47rem;
+  font-weight: 500;
+  margin: 0 0 13px 0;
+}
+
+.post-info {
+  color: rgb(133, 133, 133);
+  display: flex;
+  align-items: center;
+}
+
+.img img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+.user-info a {
+  color: rgb(219, 219, 219);
+  font-weight: 500;
+}
+
+.info {
+  margin-left: 13px;
+  font-size: 15px;
+}
+
+.post-body {
+  margin-top: 16px;
+  color: #e2e2e2;
+}
+
+.post-body h1 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 10px 0;
+}
+
+.post-body p {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5;
+  margin: 8px 0 5px 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #b9b9b9;
+}
+
+.error {
+  margin: 40px auto 0 0;
+}
+
+.edit-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 7px;
+}
+
+.edit-link a,
+.edit-link p {
+  color: #2d88ff;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  display: block;
+  margin-top: 9px;
+  font-size: 1.21rem;
+  transition: 200ms ease-in-out;
+  font-family: 'Karla', sans-serif;
+}
+
+.edit-link a:hover {
+  color: #4abaff;
+}
+
+.edit-link .delete-user {
+  color: rgb(255, 85, 85);
+}
+
+.edit-link .delete-user:hover {
+  color: rgb(255, 124, 124);
+}

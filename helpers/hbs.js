@@ -19,7 +19,8 @@ module.exports = {
   },
   canEdit: (loggedInUser, userProfile) => {
     if (JSON.stringify(loggedInUser._id) === JSON.stringify(userProfile._id)) {
-      return `<a href="/users/settings">Edit Profile</a>`;
+      return `<a href="/users/settings">Edit Profile</a>
+      <p class="delete-user">Delete Profile</p>`;
     }
   },
   isLiked: (user, postId) => {
@@ -50,7 +51,7 @@ module.exports = {
   },
   stripTags: input => {
     input = input.replace(/<(?:.|\n)*?>/gm, '');
-    return input.replace(/&nbsp;/gm, ' ');
+    return input.replace(/(&nbsp|&lt;);/gm, ' ');
   },
   select: (option, status) => {
     if (option === status) {

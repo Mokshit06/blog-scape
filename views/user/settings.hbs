@@ -1,25 +1,18 @@
-<div class="form-area">
-  <h1 class="header">Account Settings</h1>
-  <form action="/users/settings" class="form" method="POST">
-    <input type="hidden" name="_method" value="PATCH">
-    {{#each errors}}
-    <div class="form-error">
-      <p>{{msg}}</p>
-    </div>
-    {{/each}}
-    <label>
-      <span class="head">Name</span>
-      <input type="text" name="displayName" id="name" value='{{user.displayName}}' placeholder="Name...">
-    </label>
-    <span class="head">Bio</span>
-    <input type="text" name="bio" id="bio" value='{{user.bio}}' placeholder="Bio..." required>
-    </label>
-    <div class="form-btns">
-      <button class="form-btn" type="submit">Update</button>
-      <a href="/users/@{{user.username}}" class="form-cancel">Cancel</a>
-    </div>
-  </form>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.tiny.cloud/1/fl17ta0vnwiu1e83c59awiz4luuj31l6t9dq8autrc5wifec/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+  <title>Add Post - BlogScape</title>
+</head>
 
 <style>
   .form {
@@ -49,3 +42,54 @@
     font-weight: 400;
   }
 </style>
+
+<body>
+  {{> _header}}
+  <section class="content">
+    <div class="form-area">
+      <h1 class="header">Account Settings</h1>
+      <form class="form">
+        {{#each errors}}
+        <div class="form-error">
+          <p>{{msg}}</p>
+        </div>
+        {{/each}}
+        <label>
+          <span class="head">Name</span>
+          <input type="text" name="displayName" id="name" value='{{user.displayName}}' placeholder="Name...">
+        </label>
+        <span class="head">Bio</span>
+        <input type="text" name="bio" id="bio" value='{{user.bio}}' placeholder="Bio..." required>
+        </label>
+        <div class="form-btns">
+          <button class="form-btn" type="submit">Update</button>
+          <a href="/users/@{{user.username}}" class="form-cancel">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    const form = document.querySelector('.form');
+    async function updateUser(e) {
+      e.preventDefault();
+      const body = {
+        displayName: document.querySelector('#name').value,
+        bio: document.querySelector('#bio').value,
+      }
+      await fetch('/users/settings', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+    }
+    form.addEventListener('submit', (e) => {
+      updateUser(e);
+      location.href = '/users/@{{user.username}}'
+    })
+  </script>
+</body>
+
+</html>

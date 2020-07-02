@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="{{userProfile.displayName}}">
+  <meta name="description" content="{{userProfile.username}}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/user.css">
+  <title>{{userProfile.displayName}} - BlogScape</title>
+</head>
+
+<body>
+  {{> _header}}
+  <section class="content">
+    <div class="user-page">
+      <div class="profile-info">
+        <div class="display-info">
+          <span class="user-info"><a href="/users/@{{userProfile.username}}">{{userProfile.displayName}}</a></span>
+          <span class="about-user">{{userProfile.bio}}</span>
+          <div class="edit-link">{{{canEdit user userProfile}}}</div>
+        </div>
+        <div class="img">
+          <a href="/users/@{{userProfile.username}}">
+            <img src="{{userProfile.image}}" alt="User image">
+          </a>
+        </div>
+      </div>
+      {{#if blogPosts}}
+      <div class="posts">
+        <h1>Featured</h1>
+        <div class="post">
+          <div class="post-info">
+            <div class="img">
+              <a href="/users/{{mostLiked.user._id}}">
+                <img src="{{mostLiked.user.image}}" alt="User image">
+              </a>
+            </div>
+            <div class="info">
+              <span class="user-info"><a href="/users/{{mostLiked.user._id}}">{{mostLiked.user.displayName}}</a></span>
+              <div class="time-info">{{formatDate mostLiked.createdAt false}} · {{stats mostLiked.body true}}
+              </div>
+            </div>
+          </div>
+          <a href="/blog/{{mostLiked._id}}">
+            <div class="post-body">
+              <h1>{{mostLiked.title}}</h1>
+              <p>{{truncate (stripTags mostLiked.body) 140}}</p>
+            </div>
+          </a>
+          <button class="btn-like">
+            <i class="fa fa-thumbs{{isLiked user mostLiked._id}}-up" data-id="{{mostLiked._id}}"></i>
+            <span class="count" id="id{{mostLiked._id}}">{{mostLiked.likes}}</span>
+          </button>
+        </div>
+        <h1>Latest</h1>
+        {{#each blogPosts}}
+        <div class="post">
+          <div class="post-info">
+            <div class="img">
+              <a href="/users/@{{user.username}}">
+                <img src="{{user.image}}" alt="User image">
+              </a>
+            </div>
+            <div class="info">
+              <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
+              <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+              </div>
+            </div>
+          </div>
+          <a href="/blog/{{_id}}">
+            <div class="post-body">
+              <h1>{{title}}</h1>
+              <p>{{truncate (stripTags body) 140}}</p>
+            </div>
+          </a>
+          <button class="btn-like">
+            <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
+            <span class="count" id="id{{_id}}">{{likes}}</span>
+          </button>
+        </div>
+        {{else}}
+        <h1>No posts to see yet!</h1>
+        {{/each}}
+      </div>
+      {{else}}
+      <h1 class="error">No posts to see yet!</h1>
+      {{/if}}
+    </div>
+  </section>
+  {{> _footer}}
+  <script src="/js/like.js"></script>
+  <script>
+    const deleteBtn = document.querySelector('.delete-user')
+
+    async function deleteUser(e) {
+      e.preventDefault();
+      const userDelete = await fetch('/users', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application-json'
+        }
+      })
+      if (!userDelete.ok) {
+        return console.error(`Something went wrong... ${userDelete.status} ${userDelete.statusText}`)
+      }
+    }
+
+    deleteBtn.addEventListener('click', e => {
+      deleteUser(e);
+      location.href = '/';
+    })
+  </script>
+</body>
+
+</html>

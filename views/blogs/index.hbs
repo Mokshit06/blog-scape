@@ -1,144 +1,56 @@
-<h1 class="header">Blogs</h1>
-<div class="posts">
-  {{#each blogPosts}}
-  <div class="post">
-    <div class="post-info">
-      <div class="img">
-        <a href="/users/@{{user.username}}">
-          <img src="{{user.image}}" alt="User image">
-        </a>
-      </div>
-      <div class="info">
-        <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
-        <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/blogs.css">
+  <title>Blogs - BlogScape</title>
+</head>
+
+<body>
+  {{> _header}}
+  <section class="content">
+    <h1 class="header">Blogs</h1>
+    <div class="posts">
+      {{#each blogPosts}}
+      <div class="post">
+        <div class="post-info">
+          <div class="img">
+            <a href="/users/@{{user.username}}">
+              <img src="{{user.image}}" alt="User image">
+            </a>
+          </div>
+          <div class="info">
+            <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
+            <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+            </div>
+          </div>
         </div>
+        <a href="/blog/{{_id}}">
+          <div class="post-body">
+            <h1>{{title}}</h1>
+            <p>{{truncate (stripTags body) 140}}</p>
+          </div>
+        </a>
+        <button class="btn-like">
+          <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
+          <span class="count" id="id{{_id}}">{{likes}}</span>
+        </button>
       </div>
+      {{else}}
+      <h1 class="error">No posts to display</h1>
+      {{/each}}
     </div>
-    <a href="/blog/{{_id}}">
-      <div class="post-body">
-        <h1>{{title}}</h1>
-        <p>{{truncate (stripTags body) 140}}</p>
-      </div>
-    </a>
-    <button class="btn-like">
-      <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
-      <span class="count" id="id{{_id}}">{{likes}}</span>
-    </button>
-  </div>
-  {{else}}
-  <h1 class="error">No posts to display</h1>
-  {{/each}}
-</div>
+  </section>
+  {{> _footer}}
 
-<style>
-  .count {
-    cursor: text;
-  }
+  <script src="/js/like.js"></script>
+</body>
 
-  .btn-like {
-    background: inherit;
-    border: none;
-    cursor: pointer;
-    margin: 16px 0 0;
-    outline: none;
-    transition: 200ms ease-in;
-    color: #2d88ff;
-    display: flex;
-    align-items: center;
-  }
-
-  .btn-like i {
-    margin-right: 11px;
-    font-size: 1.23rem;
-    transition: 200ms ease-in-out;
-  }
-
-  .btn-like i:hover {
-    color: #2d88ff8c;
-  }
-
-  .posts {
-    min-width: 80%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin: 30px auto;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-  }
-
-  .post {
-    width: 100%;
-    border-radius: 6px;
-    padding: 25px 24px 20px;
-    background: #232323;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 5px 10px;
-  }
-
-  .post-info {
-    color: rgb(133, 133, 133);
-    display: flex;
-    align-items: center;
-  }
-
-  .img img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-  }
-
-  .user-info a {
-    color: rgb(219, 219, 219);
-    font-weight: 500;
-  }
-
-  .info {
-    margin-left: 13px;
-    font-size: 15px;
-  }
-
-  .post-body {
-    margin-top: 16px;
-    color: #e2e2e2;
-  }
-
-  .post-body h1 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    line-height: 1.2;
-    margin: 10px 0;
-  }
-
-  .post-body p {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.5;
-    margin: 8px 0 5px 0;
-    font-size: 1.1rem;
-    font-weight: 400;
-    color: #b9b9b9;
-  }
-
-  .error {
-    color: #b9b8b8;
-    font-size: 1.4rem;
-    font-weight: 400;
-  }
-</style>
-
-<script>
-  for (const btn of document.querySelectorAll('.btn-like i')) {
-    btn.addEventListener('click', async function () {
-      this.classList.remove('fa-thumbs-o-up');
-      this.classList.add('fa-thumbs-up');
-      document.querySelector(`#id${this.dataset.id}`).textContent =
-        parseInt(document.querySelector(`#id${this.dataset.id}`).textContent) + 1;
-      await fetch(`/blog/like/${this.dataset.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    });
-  }
-</script>
+</html>

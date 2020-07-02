@@ -1,104 +1,41 @@
-<div class="post">
-  <h1 class="header">{{blogPost.title}}</h1>
-  <div class="post-info">
-    <div class="img">
-      <a href="/users/@{{blogPost.user.username}}">
-        <img src="{{blogPost.user.image}}" alt="User image">
-      </a>
-    </div>
-    <div class="info">
-      <span class="user-info"><a href="/users/@{{blogPost.user.username}}">{{blogPost.user.displayName}}</a></span>
-      <div class="time-info">{{formatDate blogPost.createdAt false}} · {{stats blogPost.body true}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="{{blogPost.title}}">
+  <meta name="description" content="{{truncate (stripTags blogPost.body) 100}}">
+  <meta name="author" content="{{blogPost.user.displayName}}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <title>{{blogPost.title}} - {{blogPost.user.displayName}} - BlogScape</title>
+</head>
+
+<body>
+  {{> _header}}
+  <section class="content">
+    <div class="post">
+      <h1 class="header">{{blogPost.title}}</h1>
+      <div class="post-info">
+        <div class="img">
+          <a href="/users/@{{blogPost.user.username}}">
+            <img src="{{blogPost.user.image}}" alt="User image">
+          </a>
+        </div>
+        <div class="info">
+          <span class="user-info"><a href="/users/@{{blogPost.user.username}}">{{blogPost.user.displayName}}</a></span>
+          <div class="time-info">{{formatDate blogPost.createdAt false}} · {{stats blogPost.body true}}
+          </div>
+        </div>
       </div>
+      <div class="post-body">{{{blogPost.body}}}</div>
     </div>
-  </div>
-  <div class="post-body">{{{blogPost.body}}}</div>
-</div>
+  </section>
+</body>
 
-
-<style>
-  .header {
-    padding: 0;
-    font-size: 2.2rem;
-  }
-
-  .post {
-    width: 69%;
-    margin: 23px auto 0;
-  }
-
-  .post-info {
-    color: rgb(133, 133, 133);
-    display: flex;
-    align-items: center;
-  }
-
-  .img img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-  }
-
-  .user-info a {
-    color: rgb(219, 219, 219);
-    font-weight: 500;
-    margin-bottom: 7px;
-    display: block;
-  }
-
-  .info {
-    margin-left: 13px;
-    font-size: 16px;
-  }
-
-  .post-body {
-    color: #d8d8d8;
-    font-family: 'Karla', sans-serif;
-    font-size: 1.34rem;
-    font-weight: 400;
-    line-height: 1.8;
-    margin-top: 30px;
-    padding: 10px 6px;
-    font-weight: 400;
-  }
-
-  .post-body a {
-    color: #e4e4e4;
-    text-decoration: underline;
-  }
-
-  .post-body h2 {
-    font-size: 1.7rem;
-  }
-
-
-  blockquote {
-    background: #252525;
-    border-left: 10px solid #2d88ff;
-    margin: 1.5em 3px;
-    padding: 0.6em 10px;
-    quotes: "\201C""\201D""\2018""\2019";
-  }
-
-  blockquote:before {
-    color: #2d88ff;
-    content: open-quote;
-    font-size: 4em;
-    line-height: 0.1em;
-    margin-right: 0.25em;
-    vertical-align: -0.4em;
-  }
-
-  blockquote p {
-    font-style: italic;
-    display: inline;
-  }
-
-  ol {
-    list-style: decimal inside;
-  }
-
-  ul {
-    list-style: inside;
-  }
-</style>
+</html>
