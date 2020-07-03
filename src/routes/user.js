@@ -10,7 +10,14 @@ const router = express.Router();
  */
 router.get('/@:username', ensureAuth, async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username }).lean();
+    const user = await User.findOne({ username: req.params.username })
+      .populate({
+        path: 'liked',
+        populate: {
+          path: 'user',
+        },
+      })
+      .lean();
 
     if (!user) {
       return res.render('error/404');

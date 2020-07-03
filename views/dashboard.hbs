@@ -11,13 +11,13 @@
   <link rel="stylesheet" href="/css/style.css">
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      if (document.referrer.match(/http:\/\/localhost:3000\/blog\/edit\/[\d]+/)) {
+      if (document.referrer.match(/(http|https):\/\/(blogscape\.herokuapp|localhost:)(3000|\.com)\/blog\/edit\/[\d]+/)) {
         window.location.reload(true);
       }
     })
   </script>
 
-  <title>Dashboard - Blogger</title>
+  <title>Dashboard - BlogScape</title>
 </head>
 <style>
   .error {
@@ -114,6 +114,7 @@
   {{> _footer}}
 
   <script src="/js/navbar.js"></script>
+  <script src="/js/tab.js"></script>
   <script src="/js/app.js"></script>
 </body>
 

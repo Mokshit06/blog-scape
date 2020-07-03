@@ -378,6 +378,7 @@ a {
 }
 
 .tabs {
+  width: 100%;
   margin-top: 5vh;
   border-bottom: 2px solid rgb(65, 65, 65);
 }
@@ -536,7 +537,7 @@ hr {
 @media screen and (max-width: 768px) {
   .content {
     width: 88%;
-    margin: 70px auto 80px;
+    margin: 70px auto 10px;
   }
 
   #navbar {
@@ -710,6 +711,15 @@ hr {
   .story-head .body {
     font-size: 1.02rem;
     line-height: 1.5;
+  }
+
+  .tab-btn {
+    padding-bottom: 2px;
+    line-height: 35px;
+  }
+
+  .tabs {
+    margin-top: 3.6vh;
   }
 
   .stats .info {

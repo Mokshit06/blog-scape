@@ -15,6 +15,15 @@
   <link rel="stylesheet" href="/css/user.css">
   <title>{{displayName}} - BlogScape</title>
 </head>
+<style>
+  .tab-content {
+    width: 100%;
+  }
+
+  .error {
+    font-size: 1.3rem;
+  }
+</style>
 
 <body>
   {{> _header}}
@@ -33,75 +42,125 @@
           {{/with}}
         </div>
       </div>
-      {{#if blogPosts}}
-      <div class="posts">
-        <h1>Featured</h1>
-        <div class="post">
-          <div class="post-info">
-            <div class="img">
-              {{#with mostLiked}}
-              <a href="/users/{{user.username}}">
-                <img src="{{user.image}}" alt="User image">
-              </a>
-            </div>
-            <div class="info">
-              <span class="user-info"><a href="/users/{{user.username}}">{{user.displayName}}</a></span>
-              <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+
+      <div class="tabs">
+        <ul class="tab-list">
+          <li class="tab-btn" data-tab="#posts" id="default">Posts</li>
+          <li class="tab-btn" data-tab="#likes">Likes</li>
+        </ul>
+      </div>
+
+      <div class="tab-content" id="posts">
+        {{#if blogPosts}}
+        <div class="posts">
+          <h1>Featured</h1>
+          <div class="post">
+            <div class="post-info">
+              <div class="img">
+                {{#with mostLiked}}
+                <a href="/users/{{user.username}}">
+                  <img src="{{user.image}}" alt="User image">
+                </a>
+              </div>
+              <div class="info">
+                <span class="user-info"><a href="/users/{{user.username}}">{{user.displayName}}</a></span>
+                <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+                </div>
               </div>
             </div>
-          </div>
-          <a href="/blog/{{_id}}">
-            <div class="post-body">
-              <h1>{{title}}</h1>
-              <p>{{truncate (stripTags body) 140}}</p>
-            </div>
-          </a>
-          <button class="btn-like">
-            <i class="fa fa-thumbs{{isLiked user _id}}-up" data-id="{{_id}}"></i>
-            <span class="count" id="id{{_id}}">{{likes}}</span>
-            {{/with}}
-          </button>
-        </div>
-        <h1>Latest</h1>
-        {{#each blogPosts}}
-        <div class="post">
-          <div class="post-info">
-            <div class="img">
-              {{#with user}}
-              <a href="/users/@{{username}}">
-                <img src="{{image}}" alt="User image">
-              </a>
-            </div>
-            <div class="info">
-              <span class="user-info"><a href="/users/@{{username}}">{{displayName}}</a></span>
+            <a href="/blog/{{_id}}">
+              <div class="post-body">
+                <h1>{{title}}</h1>
+                <p>{{truncate (stripTags body) 140}}</p>
+              </div>
+            </a>
+            <button class="btn-like">
+              <i class="fa fa-thumbs{{isLiked user _id}}-up" data-id="{{_id}}"></i>
+              <span class="count" id="id{{_id}}">{{likes}}</span>
               {{/with}}
-              <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+            </button>
+          </div>
+          <h1>Latest</h1>
+          {{#each blogPosts}}
+          <div class="post">
+            <div class="post-info">
+              <div class="img">
+                {{#with user}}
+                <a href="/users/@{{username}}">
+                  <img src="{{image}}" alt="User image">
+                </a>
+              </div>
+              <div class="info">
+                <span class="user-info"><a href="/users/@{{username}}">{{displayName}}</a></span>
+                {{/with}}
+                <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+                </div>
               </div>
             </div>
+            <a href="/blog/{{_id}}">
+              <div class="post-body">
+                <h1>{{title}}</h1>
+                <p>{{truncate (stripTags body) 140}}</p>
+              </div>
+            </a>
+            <button class="btn-like">
+              <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
+              <span class="count" id="id{{_id}}">{{likes}}</span>
+            </button>
           </div>
-          <a href="/blog/{{_id}}">
-            <div class="post-body">
-              <h1>{{title}}</h1>
-              <p>{{truncate (stripTags body) 140}}</p>
-            </div>
-          </a>
-          <button class="btn-like">
-            <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
-            <span class="count" id="id{{_id}}">{{likes}}</span>
-          </button>
+          {{else}}
+          <h1 class="error">No posts to see yet!</h1>
+          {{/each}}
         </div>
         {{else}}
-        <h1>No posts to see yet!</h1>
-        {{/each}}
+        <h1 class="error">No posts to see yet!</h1>
+        {{/if}}
       </div>
-      {{else}}
-      <h1 class="error">No posts to see yet!</h1>
-      {{/if}}
+
+      <div class="tab-content" id="likes">
+        {{#if userProfile.liked}}
+        <div class="posts">
+          <h1>Likes</h1>
+          {{#each userProfile.liked}}
+          <div class="post">
+            <div class="post-info">
+              <div class="img">
+                {{#with user}}
+                <a href="/users/@{{username}}">
+                  <img src="{{image}}" alt="User image">
+                </a>
+              </div>
+              <div class="info">
+                <span class="user-info"><a href="/users/@{{username}}">{{displayName}}</a></span>
+                {{/with}}
+                <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+                </div>
+              </div>
+            </div>
+            <a href="/blog/{{_id}}">
+              <div class="post-body">
+                <h1>{{title}}</h1>
+                <p>{{truncate (stripTags body) 140}}</p>
+              </div>
+            </a>
+            <button class="btn-like">
+              <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
+              <span class="count" id="id{{_id}}">{{likes}}</span>
+            </button>
+          </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <h1 class="error">No posts liked yet!</h1>
+        {{/if}}
+      </div>
     </div>
+
   </section>
   {{> _footer}}
 
   <script src="/js/navbar.js"></script>
+  <script src="/js/tab.js"></script>
   <script src="/js/like.js"></script>
   <script>
     const deleteBtn = document.querySelector('.delete-user')
@@ -118,6 +177,7 @@
         return console.error(`Something went wrong... ${userDelete.status} ${userDelete.statusText}`)
       }
     }
+
 
     deleteBtn.addEventListener('click', e => {
       deleteUser(e);
