@@ -85,14 +85,12 @@
           <div class="post">
             <div class="post-info">
               <div class="img">
-                {{#with user}}
-                <a href="/users/@{{username}}">
-                  <img src="{{image}}" alt="User image">
+                <a href="/users/@{{user.username}}">
+                  <img src="{{user.image}}" alt="User image">
                 </a>
               </div>
               <div class="info">
-                <span class="user-info"><a href="/users/@{{username}}">{{displayName}}</a></span>
-                {{/with}}
+                <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
                 <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
                 </div>
               </div>
@@ -118,10 +116,10 @@
       </div>
 
       <div class="tab-content" id="likes">
-        {{#if userProfile.liked}}
+        {{#if likedPosts}}
         <div class="posts">
           <h1>Likes</h1>
-          {{#each userProfile.liked}}
+          {{#each likedPosts}}
           <div class="post">
             <div class="post-info">
               <div class="img">
@@ -148,8 +146,8 @@
               <span class="count" id="id{{_id}}">{{likes}}</span>
             </button>
           </div>
+          {{/each}}
         </div>
-        {{/each}}
         {{else}}
         <h1 class="error">No posts liked yet!</h1>
         {{/if}}

@@ -40,6 +40,13 @@ router.get('/@:username', ensureAuth, async (req, res) => {
       userProfile: user,
       mostLiked,
       blogPosts,
+      likedPosts: user.liked.filter((post, index, arr) => {
+        const _post = JSON.stringify(post);
+        return (
+          index ===
+          arr.findIndex(otherPost => JSON.stringify(otherPost) === _post)
+        );
+      }),
     });
   } catch (error) {
     console.error(error);
