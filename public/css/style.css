@@ -64,6 +64,7 @@ a {
 .logo a {
   font-size: 24px;
   color: #2d88ff;
+  display: block;
   letter-spacing: 1px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
@@ -523,6 +524,12 @@ hr {
 @media screen and (max-width: 1000px) {
   .footer {
     padding: 0 100px 0;
+  }
+}
+
+@media screen and (max-width: 940px) {
+  .nav-links {
+    width: 50%;
   }
 }
 

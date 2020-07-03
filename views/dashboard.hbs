@@ -9,6 +9,13 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Karla&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (document.referrer.match(/http:\/\/localhost:3000\/blog\/edit\/[\d]+/)) {
+        window.location.reload(true);
+      }
+    })
+  </script>
 
   <title>Dashboard - Blogger</title>
 </head>
