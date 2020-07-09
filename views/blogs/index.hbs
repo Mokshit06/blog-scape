@@ -20,28 +20,30 @@
     <div class="posts">
       {{#each blogPosts}}
       <div class="post">
-        <div class="post-info">
-          <div class="img">
-            <a href="/users/@{{user.username}}">
-              <img src="{{user.image}}" alt="User image">
-            </a>
-          </div>
-          <div class="info">
-            <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
-            <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+        <div class="post-content">
+          <div class="post-info">
+            <div class="img">
+              <a href="/users/@{{user.username}}">
+                <img src="{{user.image}}" alt="User image">
+              </a>
+            </div>
+            <div class="info">
+              <span class="user-info"><a href="/users/@{{user.username}}">{{user.displayName}}</a></span>
+              <div class="time-info">{{formatDate createdAt false}} · {{stats body true}}
+              </div>
             </div>
           </div>
+          <a href="/blog/{{_id}}">
+            <div class="post-body">
+              <h1>{{title}}</h1>
+              <p>{{truncate (stripTags body) 140}}</p>
+            </div>
+          </a>
+          <button class="btn-like">
+            <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
+            <span class="count" id="id{{_id}}">{{likes}}</span>
+          </button>
         </div>
-        <a href="/blog/{{_id}}">
-          <div class="post-body">
-            <h1>{{title}}</h1>
-            <p>{{truncate (stripTags body) 140}}</p>
-          </div>
-        </a>
-        <button class="btn-like">
-          <i class="fa fa-thumbs{{isLiked ../user _id}}-up" data-id="{{_id}}"></i>
-          <span class="count" id="id{{_id}}">{{likes}}</span>
-        </button>
       </div>
       {{else}}
       <h1 class="error">No posts to display</h1>
@@ -50,6 +52,7 @@
   </section>
   {{> _footer}}
 
+  <script src="/js/blog.js"></script>
   <script src="/js/navbar.js"></script>
   <script src="/js/like.js"></script>
 </body>
